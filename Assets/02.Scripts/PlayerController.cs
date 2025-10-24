@@ -13,11 +13,12 @@ public class PlayerController : MonoBehaviour
 
     // Rigidbody2D 컴포넌트를 저장할 변수
     Rigidbody2D PlayerRigid;
-
+    SpriteRenderer PlayerSprite;
     void Awake()
     {
         // 현재 게임 오브젝트에 붙어 있는 Rigidbody2D 컴포넌트를 가져와 저장
         PlayerRigid = GetComponent<Rigidbody2D>();
+        PlayerSprite = GetComponent<SpriteRenderer>();
     }
 
     void Update()
@@ -26,6 +27,12 @@ public class PlayerController : MonoBehaviour
         // GetAxisRaw는 -1, 0, 1 중 하나의 값을 반환 (즉시 반응)
         inputPlayerVec.x = Input.GetAxisRaw("Horizontal"); // 좌우 방향키 또는 A/D 키
         inputPlayerVec.y = Input.GetAxisRaw("Vertical");   // 상하 방향키 또는 W/S 키
+
+        if (inputPlayerVec.x != 0)
+        {
+            PlayerSprite.flipX = inputPlayerVec.x < 0; // 왼쪽이면 뒤집기
+        }
+
     }
 
     // 물리 연산이 필요한 경우 FixedUpdate에서 처리 (프레임과 무관하게 일정한 시간 간격으로 실행됨)
@@ -38,4 +45,5 @@ public class PlayerController : MonoBehaviour
         // Rigidbody2D를 이용해 현재 위치에서 계산된 방향으로 이동
         PlayerRigid.MovePosition(PlayerRigid.position + nextVec);
     }
+
 }
