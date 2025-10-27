@@ -13,12 +13,20 @@ public class PlayerController : MonoBehaviour
 
     // Rigidbody2D 컴포넌트를 저장할 변수
     Rigidbody2D PlayerRigid;
+    // SpriteRenderer 컴포넌트를 저장할 변수
     SpriteRenderer PlayerSprite;
+    // Animator 컴포넌트를 저장할 변수
+    Animator PlayerAni;
     void Awake()
     {
-        // 현재 게임 오브젝트에 붙어 있는 Rigidbody2D 컴포넌트를 가져와 저장
+        // 현재 게임 오브젝트에 붙어 있는 Rigidbody2D 컴포넌트를 가져와 저장 (초기화 시켜주는 것)
         PlayerRigid = GetComponent<Rigidbody2D>();
+
+        // 현재 게임 오브젝트에 붙어 있는 SpriteRenderer 컴포넌트를 가져와 저장 (초기화 시켜주는 것)
         PlayerSprite = GetComponent<SpriteRenderer>();
+
+        // 현재 게임 오브젝트에 붙어 있는 Animator 컴포넌트를 가져와 저장 (초기화 시켜주는 것)
+        PlayerAni = GetComponent<Animator>();
     }
 
     void Update()
@@ -28,10 +36,17 @@ public class PlayerController : MonoBehaviour
         inputPlayerVec.x = Input.GetAxisRaw("Horizontal"); // 좌우 방향키 또는 A/D 키
         inputPlayerVec.y = Input.GetAxisRaw("Vertical");   // 상하 방향키 또는 W/S 키
 
+        // 만약 inputPlayerVec의 x축이 0이 아니라 1이거나 -1일 때
         if (inputPlayerVec.x != 0)
         {
-            PlayerSprite.flipX = inputPlayerVec.x < 0; // 왼쪽이면 뒤집기
+            // x축이 0보다 작은 -1일 때, 플립(x축을 기준으로 좌우반전)을 해라
+            PlayerSprite.flipX = inputPlayerVec.x < 0;
         }
+
+        // PlayerAni에 Set을 가져올 때 Speed 파라미터와 종류가 같은 Float으로 가져오고
+        // 인자값을 파라미터의 이름과 같게 하고 속도값을 inputPlayerVec의 x값이나 y값 하나로 주는게 아니라
+        // 어느 방향으로 움직여도 상태가 변할 수 있게 inputPlayerVec 그 자체를 값으로 설정해서 넣어준다.
+        PlayerAni.SetFloat("Speed", inputPlayerVec.magnitude);
 
     }
 
