@@ -5,6 +5,13 @@ using UnityEngine;
 // 이 스크립트는 플레이어가 특정 구역을 벗어났을 때 타일맵을 움직이게 함
 public class MoveTileMap : MonoBehaviour
 {
+    Collider2D coll2D;
+
+    void Awake()
+    {
+        coll2D = GetComponent<Collider2D>();
+    }
+
     // 플레이어가 이 오브젝트의 트리거 영역을 벗어났을 때 실행되는 함수
     void OnTriggerExit2D(Collider2D collision)
     {
@@ -47,6 +54,13 @@ public class MoveTileMap : MonoBehaviour
                 {
                     // 플레이어가 움직인 방향으로 타일맵을 40만큼 이동
                     transform.Translate(Vector3.up * diry * 40);
+                }
+                break;
+
+            case "Enemy":
+                if (coll2D.enabled)
+                {
+                    transform.Translate(playerDir * 20 + new Vector3(Random.Range(-3f, 3f), Random.Range(-3f, 3f), 0f));
                 }
                 break;
         }

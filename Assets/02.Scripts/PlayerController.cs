@@ -51,7 +51,7 @@ public class PlayerController : MonoBehaviour
     }
 
     // 물리 연산이 필요한 경우 FixedUpdate에서 처리 (프레임과 무관하게 일정한 시간 간격으로 실행됨)
-    private void FixedUpdate()
+    void FixedUpdate()
     {
         // x축 y축으로 1만큼 움직일 때 대각선은 1만큼 움직이는게 아니라서 대각선 속도를 맞춰주기 위해 normalized 사용.
         // 속도와 시간(Time.fixedDeltaTime)을 곱해 실제 이동 거리 계산
