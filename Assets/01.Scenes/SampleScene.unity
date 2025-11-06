@@ -9077,6 +9077,55 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1504063150}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &581893295
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 581893296}
+  - component: {fileID: 581893297}
+  m_Layer: 0
+  m_Name: Weapon1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &581893296
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 581893295}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1504063150}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &581893297
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 581893295}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 53aa38897e9eff746aec6ac13b8a7cd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  id: 1
+  prefabId: 2
+  damage: 3
+  speed: 0
+  count: 0
 --- !u!1 &617799367
 GameObject:
   m_ObjectHideFlags: 0
@@ -9109,6 +9158,7 @@ MonoBehaviour:
   prefabs:
   - {fileID: 8292720819412715374, guid: 61f8fe7476bd4fb4c98fc15b76334fc9, type: 3}
   - {fileID: 28843772757756540, guid: f01f2c8cb31b15d4d995fe40a5c97289, type: 3}
+  - {fileID: 8526724174804139999, guid: 18a75d369e9efb54cafe423764c4c548, type: 3}
 --- !u!4 &617799369
 Transform:
   m_ObjectHideFlags: 0
@@ -9340,7 +9390,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 0
   prefabId: 1
-  damage: 11
+  damage: 5
   speed: 0
   count: 2
 --- !u!1 &701167631
@@ -9839,6 +9889,7 @@ Transform:
   - {fileID: 519420032}
   - {fileID: 701167632}
   - {fileID: 694411818}
+  - {fileID: 581893296}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1504063151
@@ -9855,6 +9906,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inputPlayerVec: {x: 0, y: 0}
   speed: 3
+  scanner: {fileID: 0}
 --- !u!95 &1504063152
 Animator:
   serializedVersion: 5

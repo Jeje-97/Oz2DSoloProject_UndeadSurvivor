@@ -21,6 +21,8 @@ public class Enemy : MonoBehaviour
     // 에너미 Rigidbody2D 컴포넌트
     Rigidbody2D enemyRigid;
 
+    Collider2D collider2d;
+
     Animator animator;
 
     // 에너미 SpriteRenderer 컴포넌트
@@ -40,6 +42,8 @@ public class Enemy : MonoBehaviour
         enemySprite = GetComponent<SpriteRenderer>();
 
         wait = new WaitForFixedUpdate();
+
+        collider2d = GetComponent<Collider2D>();
     }
 
     // 물리 연산이 필요한 경우 매 프레임마다 호출됨
@@ -77,6 +81,10 @@ public class Enemy : MonoBehaviour
     {
         target = GameManager.instance.playerController.GetComponent<Rigidbody2D>();
         isLive = false;
+        collider2d.enabled = true;
+        enemyRigid.simulated = true;
+        enemySprite.sortingOrder = 2;
+        animator.SetBool("Dead", false);
         health = maxHealth;
     }
 
@@ -90,7 +98,7 @@ public class Enemy : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collision)
     {
-        if (!collision.CompareTag("Bullet"))
+        if (!collision.CompareTag("Bullet") || isLive)
             return;
 
         health -= collision.GetComponent<Bullet>().damage;
@@ -102,7 +110,13 @@ public class Enemy : MonoBehaviour
         }
         else
         {
-            Dead();
+            isLive = false;
+            collider2d.enabled = false;
+            enemyRigid.simulated = false;
+            enemySprite.sortingOrder = 1;
+            animator.SetBool("Dead", true);
+            GameManager.instance.kill++;
+            GameManager.instance.GetExp();
         }
     }
 
@@ -114,7 +128,7 @@ public class Enemy : MonoBehaviour
         enemyRigid.AddForce(dirVec.normalized * 3, ForceMode2D.Impulse);
     }
 
-    void Dead()
+    public void Dead()
     {
         gameObject.SetActive(false);
     }

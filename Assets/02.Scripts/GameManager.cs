@@ -8,6 +8,12 @@ public class GameManager : MonoBehaviour
     public static GameManager instance;
     public float gameTime;
     public float maxGameTime = 2 * 10f;
+
+    public int level;
+    public int kill;
+    public int exp;
+    public int[] nextExp = { 10,  30,  60, 100, 150, 210, 280, 360, 450, 600};
+
     public PoolManager poolManager;
     public PlayerController playerController;
 
@@ -24,5 +30,16 @@ public class GameManager : MonoBehaviour
             gameTime = maxGameTime;
         }
 
+    }
+
+    public void GetExp()
+    {
+        exp++;
+
+        if (exp == nextExp[level])
+        {
+            level++;
+            exp = 0;
+        }
     }
 }
