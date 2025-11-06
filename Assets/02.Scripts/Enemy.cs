@@ -8,14 +8,20 @@ public class Enemy : MonoBehaviour
     // 에너미의 이동 속도
     public float speed;
 
+    public float health;
+    public float maxHealth;
+    public RuntimeAnimatorController[] aniCon;
+
     // 추적할 대상
     public Rigidbody2D target;
 
     // 에너미가 살아있는 상태인지
-    bool isLive = false;
+    bool isLive;
 
     // 에너미 Rigidbody2D 컴포넌트
     Rigidbody2D enemyRigid;
+
+    Animator animator;
 
     // 에너미 SpriteRenderer 컴포넌트
     SpriteRenderer enemySprite;
@@ -25,6 +31,8 @@ public class Enemy : MonoBehaviour
     {
         // Rigidbody2D 컴포넌트 가져오기
         enemyRigid = GetComponent<Rigidbody2D>();
+
+        animator = GetComponent<Animator>();
 
         // SpriteRenderer 컴포넌트 가져오기
         enemySprite = GetComponent<SpriteRenderer>();
@@ -64,5 +72,37 @@ public class Enemy : MonoBehaviour
     void OnEnable()
     {
         target = GameManager.instance.playerController.GetComponent<Rigidbody2D>();
+        isLive = false;
+        health = maxHealth;
+    }
+
+    public void Init(SpawnData data)
+    {
+        animator.runtimeAnimatorController = aniCon[data.spriteType];
+        speed = data.speed;
+        maxHealth = data.health;
+        health = data.health;
+    }
+
+    void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (!collision.CompareTag("Bullet"))
+            return;
+
+        health -= collision.GetComponent<Bullet>().damage;
+
+        if (health > 0)
+        {
+
+        }
+        else
+        {
+            Dead();
+        }
+    }
+
+    void Dead()
+    {
+        gameObject.SetActive(false);
     }
 }
