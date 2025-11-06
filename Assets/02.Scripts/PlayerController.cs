@@ -11,6 +11,8 @@ public class PlayerController : MonoBehaviour
     // 플레이어 이동 속도
     public float speed;
 
+    public Scanner scanner;
+
     // Rigidbody2D 컴포넌트를 저장할 변수
     Rigidbody2D PlayerRigid;
     // SpriteRenderer 컴포넌트를 저장할 변수
@@ -27,6 +29,8 @@ public class PlayerController : MonoBehaviour
 
         // 현재 게임 오브젝트에 붙어 있는 Animator 컴포넌트를 가져와 저장 (초기화 시켜주는 것)
         PlayerAni = GetComponent<Animator>();
+
+        scanner = GetComponent<Scanner>();
     }
 
     void Update()

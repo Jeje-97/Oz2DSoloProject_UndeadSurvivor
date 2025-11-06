@@ -26,6 +26,8 @@ public class Enemy : MonoBehaviour
     // 에너미 SpriteRenderer 컴포넌트
     SpriteRenderer enemySprite;
 
+    WaitForFixedUpdate wait;
+
     // 게임 시작 전에 컴포넌트를 가져오는 초기 설정
     void Awake()
     {
@@ -36,13 +38,15 @@ public class Enemy : MonoBehaviour
 
         // SpriteRenderer 컴포넌트 가져오기
         enemySprite = GetComponent<SpriteRenderer>();
+
+        wait = new WaitForFixedUpdate();
     }
 
     // 물리 연산이 필요한 경우 매 프레임마다 호출됨
     void FixedUpdate()
     {
         // 적이 살아있으면 움직이지 않음
-        if (isLive)
+        if (isLive || animator.GetCurrentAnimatorStateInfo(0).IsName("Hit"))
             return;
 
         // 대상과 에너미 사이의 방향 벡터 계산
@@ -90,15 +94,24 @@ public class Enemy : MonoBehaviour
             return;
 
         health -= collision.GetComponent<Bullet>().damage;
+        StartCoroutine(KnockBack());
 
         if (health > 0)
         {
-
+            animator.SetTrigger("Hit");
         }
         else
         {
             Dead();
         }
+    }
+
+    IEnumerator KnockBack()
+    {
+        yield return wait;
+        Vector3 playerPos = GameManager.instance.playerController.transform.position;
+        Vector3 dirVec = transform.position - playerPos;
+        enemyRigid.AddForce(dirVec.normalized * 3, ForceMode2D.Impulse);
     }
 
     void Dead()
